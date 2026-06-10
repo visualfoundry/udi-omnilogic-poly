@@ -1,0 +1,7 @@
+# udi_interface is the Polyglot v3 / PG3 framework library.
+udi_interface>=3.1.0
+
+# Hayward OmniLogic local UDP protocol library. Pin to a known-good version
+# once you've confirmed the method surface used in omni/client.py.
+python-omnilogic-local==0.0.5
+python-dotenv

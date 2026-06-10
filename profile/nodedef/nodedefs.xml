@@ -1,0 +1,61 @@
+<nodeDefs>
+
+  <nodeDef id="controller" nodeType="139" nls="ctl">
+    <sts>
+      <st id="ST" editor="bool" />
+      <st id="GV0" editor="count" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts>
+        <cmd id="DISCOVER" />
+      </accepts>
+    </cmds>
+  </nodeDef>
+
+  <nodeDef id="bow" nodeType="139" nls="bow">
+    <sts>
+      <st id="ST" editor="tempF" />
+      <st id="GV0" editor="bool" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts />
+    </cmds>
+  </nodeDef>
+
+  <nodeDef id="pump" nodeType="139" nls="pump">
+    <sts>
+      <st id="ST" editor="pct" />
+      <st id="GV0" editor="bool" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+        <cmd id="SETSPD">
+          <p id="" editor="pct" init="ST" />
+        </cmd>
+      </accepts>
+    </cmds>
+  </nodeDef>
+
+  <nodeDef id="heater" nodeType="139" nls="heater">
+    <sts>
+      <st id="ST" editor="heatstate" />
+      <st id="GV0" editor="setpointF" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+        <cmd id="SET_SP">
+          <p id="" editor="setpointF" init="GV0" />
+        </cmd>
+      </accepts>
+    </cmds>
+  </nodeDef>
+
+</nodeDefs>

@@ -1,0 +1,25 @@
+{
+  "name": "OmniLogic (Local)",
+  "type": "node",
+  "executioncmd": "./install.sh",
+  "startcmd": "python3 ./omnilogic-poly.py",
+  "shortPoll": 30,
+  "longPoll": 300,
+  "credits": [
+    {
+      "author": "you",
+      "version": "0.1.0",
+      "date": "2026-06-10",
+      "description": "Hayward OmniLogic local-protocol integration for IoX/eisy"
+    }
+  ],
+  "requestParams": {},
+  "params": {
+    "host": "",
+    "port": "10444"
+  },
+  "paramsHelp": {
+    "host": "IP address of the OmniLogic/OmniPL controller on your LAN",
+    "port": "UDP control port (default 10444)"
+  }
+}

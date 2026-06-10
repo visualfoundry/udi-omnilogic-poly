@@ -1,0 +1,27 @@
+<editors>
+
+  <editor id="bool">
+    <range uom="2" subset="0,1" nls="BOOL" />
+  </editor>
+
+  <editor id="count">
+    <range uom="56" min="0" max="255" prec="0" />
+  </editor>
+
+  <editor id="pct">
+    <range uom="51" min="0" max="100" prec="0" step="1" />
+  </editor>
+
+  <editor id="tempF">
+    <range uom="17" min="-40" max="150" prec="0" />
+  </editor>
+
+  <editor id="setpointF">
+    <range uom="17" min="40" max="104" prec="0" step="1" />
+  </editor>
+
+  <editor id="heatstate">
+    <range uom="25" subset="0,1" nls="HEAT" />
+  </editor>
+
+</editors>

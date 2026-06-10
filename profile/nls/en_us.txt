@@ -1,0 +1,38 @@
+# ---- node names ----
+ND-controller-NAME = OmniLogic Controller
+ND-controller-ICON = GenericCtl
+ND-bow-NAME = Body of Water
+ND-bow-ICON = Thermostat
+ND-pump-NAME = Pump
+ND-pump-ICON = GenericRsp
+ND-heater-NAME = Heater
+ND-heater-ICON = Thermostat
+
+# ---- controller drivers ----
+ST-ctl-ST-NAME = Online
+ST-ctl-GV0-NAME = Equipment Count
+
+# ---- bow drivers ----
+ST-bow-ST-NAME = Water Temp
+ST-bow-GV0-NAME = Active
+
+# ---- pump drivers ----
+ST-pump-ST-NAME = Speed
+ST-pump-GV0-NAME = Running
+
+# ---- heater drivers ----
+ST-heater-ST-NAME = State
+ST-heater-GV0-NAME = Setpoint
+
+# ---- commands ----
+CMD-DISCOVER-NAME = Re-Discover
+CMD-DON-NAME = On
+CMD-DOF-NAME = Off
+CMD-SETSPD-NAME = Set Speed
+CMD-SET_SP-NAME = Set Setpoint
+
+# ---- enums ----
+BOOL-0 = False
+BOOL-1 = True
+HEAT-0 = Off
+HEAT-1 = Heating
