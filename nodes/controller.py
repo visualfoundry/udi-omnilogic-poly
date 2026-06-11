@@ -43,29 +43,19 @@ class Controller(udi_interface.Node):
         polyglot.subscribe(polyglot.POLL, self.poll)
         polyglot.subscribe(polyglot.STOP, self.stop)
 
-        polyglot.saveTypedParams([
-            {
-                'name': 'host',
-                'title': 'OmniLogic Controller IP',
-                'desc': 'IP address of the OmniLogic/OmniPL controller on your LAN',
-                'isRequired': True,
-                'defaultValue': ''
-            },
-            {
-                'name': 'port',
-                'title': 'UDP Port',
-                'desc': 'UDP control port (default 10444)',
-                'isRequired': False,
-                'defaultValue': '10444'
-            }
-        ])
-
         polyglot.ready()
         polyglot.addNode(self)
 
     # ----- configuration --------------------------------------------------
     def parameter_handler(self, params):
         self.params.load(params)
+        # Ensure the fields exist in PG3's DB so they appear in the Configuration tab.
+        # Custom.__setitem__ auto-saves to PG3 on each assignment.
+        if 'host' not in self.params:
+            self.params['host'] = ''
+        if 'port' not in self.params:
+            self.params['port'] = '10444'
+
         # PG3 custom params take priority; fall back to .env / environment variables.
         self.host = self.params.get("host") or os.environ.get("OMNI_HOST")
         pg3_port = self.params.get("port")
@@ -76,12 +66,20 @@ class Controller(udi_interface.Node):
             self.poly.Notices["host"] = (
                 "Set 'host' (OmniLogic controller IP) in Configuration, then restart."
             )
+            return
+
+        # If we now have a host but haven't started yet, trigger start.
+        if self.omni is None:
+            self.start()
 
     # ----- lifecycle ------------------------------------------------------
     def start(self):
         LOGGER.info("Controller starting")
         if not self.host:
             LOGGER.warning("No host configured; waiting for custom params.")
+            return
+        if self.omni is not None:
+            LOGGER.info("OmniClient already running.")
             return
         try:
             self.omni = OmniClient(self.host, self.port)
