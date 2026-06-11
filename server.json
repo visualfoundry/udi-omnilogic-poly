@@ -1,8 +1,8 @@
 {
   "name": "OmniLogic (Local)",
-  "type": "node",
-  "executioncmd": "./install.sh",
-  "startcmd": "python3 ./omnilogic-poly.py",
+  "type": "python3",
+  "executable": "omnilogic-poly.py",
+  "install": "install.sh",
   "shortPoll": 30,
   "longPoll": 300,
   "credits": [
