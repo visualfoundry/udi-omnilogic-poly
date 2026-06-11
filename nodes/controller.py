@@ -43,6 +43,23 @@ class Controller(udi_interface.Node):
         polyglot.subscribe(polyglot.POLL, self.poll)
         polyglot.subscribe(polyglot.STOP, self.stop)
 
+        polyglot.saveTypedParams([
+            {
+                'name': 'host',
+                'title': 'OmniLogic Controller IP',
+                'desc': 'IP address of the OmniLogic/OmniPL controller on your LAN',
+                'isRequired': True,
+                'defaultValue': ''
+            },
+            {
+                'name': 'port',
+                'title': 'UDP Port',
+                'desc': 'UDP control port (default 10444)',
+                'isRequired': False,
+                'defaultValue': '10444'
+            }
+        ])
+
         polyglot.ready()
         polyglot.addNode(self)
 
