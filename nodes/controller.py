@@ -96,6 +96,17 @@ class Controller(udi_interface.Node):
             self.omni.start()
             self.setDriver("ST", 1)
             self.discover()
+            # Request PG3 to (re)start the poll timers. Guards against
+            # the case where PG3's startNs threw after spawning this
+            # process, which would leave the NS running but with no
+            # active shortPoll timer.
+            cfg = self.poly.config or {}
+            self.poly.send({
+                'polls': {
+                    'short': cfg.get('shortPoll', 30),
+                    'long': cfg.get('longPoll', 300),
+                }
+            }, 'system')
         except Exception:
             LOGGER.exception("Failed to start OmniClient")
             self.setDriver("ST", 0)
