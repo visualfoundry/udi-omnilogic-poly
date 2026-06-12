@@ -141,7 +141,6 @@ class Controller(udi_interface.Node):
                 self._add(Heater, htr_id, f"{bow_name} Heater",
                           pool_id=bow_id, equipment_id=htr_id)
 
-            # >>> VERIFY <<< element tag: may be "Chlorinator" or "Chlor" in real XML
             chlor = bow_elem.find("Chlorinator")
             if chlor is not None:
                 chlor_id = int(chlor.findtext("System-Id"))

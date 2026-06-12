@@ -6,11 +6,6 @@ Commands: DON / DOF (enable/disable)
 
 Level control is not available in pyomnilogic-local 0.0.5; only on/off
 is supported via set_equipment. GV0 is read-only from telemetry.
-
->>> VERIFY <<< telemetry attribute names on real hardware:
-  <Chlorinator systemId="6" enable="1" timedPercent="50" ... />
-The attribute "enable" and "timedPercent" are best-effort guesses from
-the OmniLogic XML protocol. Capture a real telemetry payload to confirm.
 """
 import udi_interface
 
@@ -33,12 +28,11 @@ class Chlorinator(udi_interface.Node):
         self.equipment_id = equipment_id
 
     def apply_telemetry(self, telem_map):
-        # >>> VERIFY <<< element tag and attribute names from live controller
         elem = telem_map.get(self.equipment_id)
         if elem is None:
             return
         self.setDriver("ST", int(elem.get("enable", 0)))
-        self.setDriver("GV0", int(elem.get("timedPercent", 0)))
+        self.setDriver("GV0", int(elem.get("Timed-Percent", 0)))
 
     def cmd_on(self, command):
         self.omni.set_equipment(self.pool_id, self.equipment_id, True)
