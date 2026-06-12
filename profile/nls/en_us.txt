@@ -24,6 +24,12 @@ ST-pump-GV0-NAME = Running
 ST-heater-ST-NAME = State
 ST-heater-GV0-NAME = Setpoint
 
+# ---- chlorinator drivers ----
+ND-chlorinator-NAME = Chlorinator
+ND-chlorinator-ICON = GenericRsp
+ST-chlor-ST-NAME = Enabled
+ST-chlor-GV0-NAME = Output Level
+
 # ---- commands ----
 CMD-DISCOVER-NAME = Re-Discover
 CMD-DON-NAME = On

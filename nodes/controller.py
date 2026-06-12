@@ -17,6 +17,7 @@ from omni.client import OmniClient
 from nodes.bow import BodyOfWater
 from nodes.pump import Pump
 from nodes.heater import Heater
+from nodes.chlorinator import Chlorinator
 
 LOGGER = udi_interface.LOGGER
 Custom = udi_interface.Custom
@@ -140,10 +141,18 @@ class Controller(udi_interface.Node):
                 self._add(Heater, htr_id, f"{bow_name} Heater",
                           pool_id=bow_id, equipment_id=htr_id)
 
+            # >>> VERIFY <<< element tag: may be "Chlorinator" or "Chlor" in real XML
+            chlor = bow_elem.find("Chlorinator")
+            if chlor is not None:
+                chlor_id = int(chlor.findtext("System-Id"))
+                self._add(Chlorinator, chlor_id, f"{bow_name} Chlorinator",
+                          pool_id=bow_id, equipment_id=chlor_id)
+
     def _build_example_nodes(self):
         self._add(BodyOfWater, 7, "Pool", pool_id=7)
         self._add(Pump, 8, "Filter Pump", pool_id=7, equipment_id=8)
         self._add(Heater, 9, "Heater", pool_id=7, equipment_id=9)
+        self._add(Chlorinator, 6, "Chlorinator", pool_id=7, equipment_id=6)
 
     def _add(self, cls, system_id, name, **kw):
         address = f"{cls.prefix}{system_id}"

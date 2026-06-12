@@ -58,4 +58,19 @@
     </cmds>
   </nodeDef>
 
+
+  <nodeDef id="chlorinator" nodeType="139" nls="chlor">
+    <sts>
+      <st id="ST" editor="bool" />
+      <st id="GV0" editor="pct" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+      </accepts>
+    </cmds>
+  </nodeDef>
+
 </nodeDefs>
