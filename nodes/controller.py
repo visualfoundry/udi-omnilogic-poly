@@ -58,19 +58,28 @@ class Controller(udi_interface.Node):
             self.params['port'] = '10444'
 
         # PG3 custom params take priority; fall back to .env / environment variables.
-        self.host = self.params.get("host") or os.environ.get("OMNI_HOST")
+        new_host = self.params.get("host") or os.environ.get("OMNI_HOST")
         pg3_port = self.params.get("port")
-        self.port = int(pg3_port) if pg3_port else int(os.environ.get("OMNI_PORT", 10444))
+        new_port = int(pg3_port) if pg3_port else int(os.environ.get("OMNI_PORT", 10444))
 
         self.poly.Notices.clear()
-        if not self.host:
+        if not new_host:
             self.poly.Notices["host"] = (
                 "Set 'host' (OmniLogic controller IP) in Configuration, then restart."
             )
             return
 
-        # If we now have a host but haven't started yet, trigger start.
+        host_changed = (new_host != self.host or new_port != self.port)
+        self.host = new_host
+        self.port = new_port
+
         if self.omni is None:
+            self.start()
+        elif host_changed:
+            LOGGER.info("Host/port changed; restarting OmniClient")
+            self.omni.stop()
+            self.omni = None
+            self.children.clear()
             self.start()
 
     # ----- lifecycle ------------------------------------------------------
