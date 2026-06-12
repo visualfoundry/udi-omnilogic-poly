@@ -141,6 +141,13 @@ class Controller(udi_interface.Node):
 
         self.setDriver("GV0", len(self.children))
 
+        # Remove nodes that were registered in a prior run but are no longer discovered.
+        live = {node.address for node in self.children.values()}
+        for address in list(self.poly._nodes.keys()):
+            if address != self.address and address not in live:
+                LOGGER.warning("Removing stale node %s", address)
+                self.poly.delNode(address)
+
     def _build_from_config(self, config_xml):
         root = ET.fromstring(config_xml)
         backyard = root.find("Backyard")
