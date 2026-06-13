@@ -29,12 +29,12 @@ class Heater(udi_interface.Node):
 
     def apply_telemetry(self, telem_map):
         # <VirtualHeater systemId="3" Current-Set-Point="88" enable="1" whyHeaterIsOn="1" />
-        # whyHeaterIsOn is 0 when idle, non-zero when actively heating.
+        # enable: 0 = user turned heater off, 1 = heater scheduled/on.
+        # whyHeaterIsOn: non-zero while actively firing (stays 1 even at setpoint when enabled).
         elem = telem_map.get(self.equipment_id)
         if elem is None:
             return
-        heating = 1 if int(elem.get("whyHeaterIsOn", 0)) != 0 else 0
-        self.setDriver("ST", heating)
+        self.setDriver("ST", int(elem.get("enable", 0)))
         self.setDriver("GV0", int(elem.get("Current-Set-Point", 0)))
 
     def cmd_on(self, command):
