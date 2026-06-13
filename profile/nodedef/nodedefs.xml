@@ -30,7 +30,10 @@
       <st id="GV0" editor="bool" />
     </sts>
     <cmds>
-      <sends />
+      <sends>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+      </sends>
       <accepts>
         <cmd id="DON" />
         <cmd id="DOF" />
@@ -47,7 +50,10 @@
       <st id="GV0" editor="setpointF" />
     </sts>
     <cmds>
-      <sends />
+      <sends>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+      </sends>
       <accepts>
         <cmd id="DON" />
         <cmd id="DOF" />
@@ -58,14 +64,16 @@
     </cmds>
   </nodeDef>
 
-
   <nodeDef id="chlorinator" nodeType="139" nls="chlor">
     <sts>
       <st id="ST" editor="bool" />
       <st id="GV0" editor="pct" />
     </sts>
     <cmds>
-      <sends />
+      <sends>
+        <cmd id="DON" />
+        <cmd id="DOF" />
+      </sends>
       <accepts>
         <cmd id="DON" />
         <cmd id="DOF" />

@@ -33,7 +33,8 @@ class Pump(udi_interface.Node):
         if elem is None:
             return
         self.setDriver("ST", int(elem.get("filterSpeed", 0)))
-        self.setDriver("GV0", int(elem.get("filterState", 0)))
+        if self.setDriver("GV0", int(elem.get("filterState", 0))):
+            self.reportCmd("DON" if int(elem.get("filterState", 0)) else "DOF")
 
     def cmd_on(self, command):
         self.omni.set_equipment(self.pool_id, self.equipment_id, True)

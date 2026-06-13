@@ -31,7 +31,8 @@ class Chlorinator(udi_interface.Node):
         elem = telem_map.get(self.equipment_id)
         if elem is None:
             return
-        self.setDriver("ST", int(elem.get("enable", 0)))
+        if self.setDriver("ST", int(elem.get("enable", 0))):
+            self.reportCmd("DON" if int(elem.get("enable", 0)) else "DOF")
         self.setDriver("GV0", int(elem.get("Timed-Percent", 0)))
 
     def cmd_on(self, command):
