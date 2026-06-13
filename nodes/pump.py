@@ -26,6 +26,7 @@ class Pump(udi_interface.Node):
         self.omni = omni
         self.pool_id = pool_id
         self.equipment_id = equipment_id
+        self._ready = False
 
     def apply_telemetry(self, telem_map):
         # <Filter systemId="2" filterState="1" filterSpeed="70" ... />
@@ -33,8 +34,9 @@ class Pump(udi_interface.Node):
         if elem is None:
             return
         self.setDriver("ST", int(elem.get("filterSpeed", 0)))
-        if self.setDriver("GV0", int(elem.get("filterState", 0))):
+        if self.setDriver("GV0", int(elem.get("filterState", 0))) and self._ready:
             self.reportCmd("DON" if int(elem.get("filterState", 0)) else "DOF")
+        self._ready = True
 
     def cmd_on(self, command):
         self.omni.set_equipment(self.pool_id, self.equipment_id, True)
