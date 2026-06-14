@@ -15,8 +15,17 @@
 
   <nodeDef id="bow" nodeType="139" nls="bow">
     <sts>
-      <st id="ST" editor="tempF" />
+      <st id="ST"  editor="tempF" />
       <st id="GV0" editor="bool" />
+      <st id="GV1" editor="ph" />
+      <st id="GV2" editor="orp" />
+      <st id="GV3" editor="tempF" />
+      <st id="GV4" editor="watts" />
+      <st id="GV5" editor="ppm" />
+      <st id="GV6" editor="ppm" />
+      <st id="GV7" editor="bool" />
+      <st id="GV8" editor="bool" />
+      <st id="GV9" editor="bool" />
     </sts>
     <cmds>
       <sends />

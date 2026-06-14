@@ -15,6 +15,15 @@ ST-ctl-GV0-NAME = Equipment Count
 # ---- bow drivers ----
 ST-bow-ST-NAME = Water Temp
 ST-bow-GV0-NAME = Active
+ST-bow-GV1-NAME = pH
+ST-bow-GV2-NAME = ORP
+ST-bow-GV3-NAME = Air Temp
+ST-bow-GV4-NAME = Pump Power
+ST-bow-GV5-NAME = Salt Level
+ST-bow-GV6-NAME = Salt Level Avg
+ST-bow-GV7-NAME = Heater Firing
+ST-bow-GV8-NAME = Chlor Alert
+ST-bow-GV9-NAME = Chlor Error
 
 # ---- pump drivers ----
 ST-pump-ST-NAME = Speed
