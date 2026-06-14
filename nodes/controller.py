@@ -6,6 +6,7 @@ the equipment tree, and builds child nodes. On each shortPoll it pulls
 telemetry once and pushes values into the children.
 """
 import os
+import time
 import xml.etree.ElementTree as ET
 
 from dotenv import load_dotenv
@@ -38,6 +39,7 @@ class Controller(udi_interface.Node):
         self.port = int(os.environ.get("OMNI_PORT", 10444))
         self.params = Custom(polyglot, "customparams")
         self.children = {}  # system_id -> node
+        self._last_telem_time = 0.0  # debounce duplicate shortPoll firings
 
         polyglot.subscribe(polyglot.START, self.start, address)
         polyglot.subscribe(polyglot.CUSTOMPARAMS, self.parameter_handler)
@@ -195,6 +197,11 @@ class Controller(udi_interface.Node):
     def update_telemetry(self):
         if not self.omni:
             return
+        now = time.monotonic()
+        if now - self._last_telem_time < 10:
+            LOGGER.debug("Skipping duplicate shortPoll (%.2fs since last fetch)", now - self._last_telem_time)
+            return
+        self._last_telem_time = now
         try:
             telemetry = self.omni.get_telemetry()
         except Exception:
