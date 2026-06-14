@@ -29,13 +29,17 @@ class Pump(udi_interface.Node):
         self._ready = False
 
     def apply_telemetry(self, telem_map):
-        # <Filter systemId="2" filterState="1" filterSpeed="70" ... />
+        # <Filter systemId="2" filterState="1" filterSpeed="0" lastSpeed="78" ... />
+        # filterSpeed is 0 when the pump runs from a schedule (no manual override).
+        # lastSpeed tracks the actual running speed in both cases.
         elem = telem_map.get(self.equipment_id)
         if elem is None:
             return
-        self.setDriver("ST", int(elem.get("filterSpeed", 0)))
-        if self.setDriver("GV0", int(elem.get("filterState", 0))) and self._ready:
-            self.reportCmd("DON" if int(elem.get("filterState", 0)) else "DOF")
+        filter_state = int(elem.get("filterState", 0))
+        speed = int(elem.get("lastSpeed", 0)) if filter_state else 0
+        self.setDriver("ST", speed)
+        if self.setDriver("GV0", filter_state) and self._ready:
+            self.reportCmd("DON" if filter_state else "DOF")
         self._ready = True
 
     def cmd_on(self, command):
