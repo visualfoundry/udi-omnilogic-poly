@@ -198,9 +198,11 @@ class Controller(udi_interface.Node):
         if not self.omni:
             return
         now = time.monotonic()
-        if now - self._last_telem_time < 10:
-            LOGGER.debug("Skipping duplicate shortPoll (%.2fs since last fetch)", now - self._last_telem_time)
+        elapsed = now - self._last_telem_time
+        if elapsed < 10:
+            LOGGER.info("Skipping duplicate shortPoll (%.2fs since last fetch)", elapsed)
             return
+        LOGGER.info("update_telemetry: starting fetch (%.2fs since last)", elapsed)
         self._last_telem_time = now
         try:
             telemetry = self.omni.get_telemetry()
