@@ -9,8 +9,6 @@ modeled as a percentage (0-100) rather than raw RPM.
 """
 import udi_interface
 
-LOGGER = udi_interface.LOGGER
-
 
 class Pump(udi_interface.Node):
     id = "pump"
@@ -37,8 +35,6 @@ class Pump(udi_interface.Node):
             return
         filter_state = int(elem.get("filterState", 0))
         speed = int(elem.get("lastSpeed", 0)) if filter_state else 0
-        LOGGER.info("PUMP apply_telemetry: filterState=%s lastSpeed=%s speed=%s",
-                    elem.get("filterState"), elem.get("lastSpeed"), speed)
         self.setDriver("ST", speed)
         if self.setDriver("GV0", filter_state) and self._ready:
             self.reportCmd("DON" if filter_state else "DOF")
