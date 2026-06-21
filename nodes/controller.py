@@ -40,6 +40,7 @@ class Controller(udi_interface.Node):
         self.params = Custom(polyglot, "customparams")
         self.children = {}  # system_id -> node
         self._last_telem_time = 0.0  # debounce duplicate shortPoll firings
+        self._synced = False           # force-report all drivers on first successful poll
 
         polyglot.subscribe(polyglot.START, self.start, address)
         polyglot.subscribe(polyglot.CUSTOMPARAMS, self.parameter_handler)
@@ -223,5 +224,12 @@ class Controller(udi_interface.Node):
                 node.apply_telemetry(telem_map)
             except Exception:
                 LOGGER.exception("apply_telemetry failed for %s", system_id)
+
+        if not self._synced:
+            self._synced = True
+            LOGGER.info("First poll complete — force-reporting all drivers to ISX")
+            self.reportDrivers()
+            for node in self.children.values():
+                node.reportDrivers()
 
     commands = {"DISCOVER": discover}
