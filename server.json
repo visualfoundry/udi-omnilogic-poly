@@ -8,8 +8,8 @@
   "credits": [
     {
       "author": "you",
-      "version": "0.1.0",
-      "date": "2026-06-10",
+      "version": "0.1.1",
+      "date": "2026-10-22",
       "description": "Hayward OmniLogic local-protocol integration for IoX/eisy"
     }
   ],
